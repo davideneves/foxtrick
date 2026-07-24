@@ -37,6 +37,8 @@ for development:
 \* Bug fixes for release versions should be based on the release tag.
 They will be merged into release branch and `master` later.
 
+To load the extension locally (Chrome / Firefox), see [maintainer/LocalDev.md](maintainer/LocalDev.md).
+
 **NB:** import this preference to enable Foxtrick logging:
 `user_pref("extensions.foxtrick.prefs.logDisabled",false);`
 
