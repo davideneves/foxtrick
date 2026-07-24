@@ -973,32 +973,51 @@ Foxtrick.Pages.Player.parseYouthSkills = function(table) {
 				}
 			}
 			else if (hasNewBars) {
-				// new bars
+				// new bars — HT puts .bar-max (potential) before .bar-level (current)
+				// in the DOM, so never assign titles by querySelectorAll order (#1718)
 				let bar = skillCell.querySelector('.ht-bar');
+				if (bar) {
+					/**
+					 * @param {HTMLElement} el
+					 * @return {string}
+					 */
+					let titleOf = function(el) {
+						if (!el)
+							return '';
+						if (el.title)
+							return el.title.trim();
+						/** @type {HTMLElement} */
+						let nested = el.querySelector('[title]');
+						return nested && nested.title ? nested.title.trim() : '';
+					};
 
-				/** @type {NodeListOf<HTMLElement>} */
-				let titles = bar ? bar.querySelectorAll('div[title]') : null;
-				if (titles && titles.length) {
-					[current, max] = [...titles].map(t => t.title);
-					if (titles.length == 1) {
+					/** @type {HTMLElement} */
+					let levelEl = bar.querySelector('.bar-level:not(.ft-bar)');
+					/** @type {HTMLElement} */
+					let maxEl = bar.querySelector('.bar-max:not(.ft-bar), .bar-cap:not(.ft-bar)');
+
+					let levelTitle = titleOf(levelEl);
+					let maxTitle = titleOf(maxEl);
+					if (levelTitle)
+						current = levelTitle;
+					if (maxTitle)
+						max = maxTitle;
+
+					if (current && current !== '-' && max === '-') {
 						if (skill.maxed) {
 							max = current;
 						}
-						else if (skill.max) {
+						else if (skill.max && !skill.current) {
 							max = current;
 							current = '-';
 						}
-						else {
-							max = '-';
-						}
 					}
 				}
-				else {
-					if (skill.current)
-						current = Foxtrick.L10n.getTextByLevel(skill.current);
-					if (skill.max)
-						max = Foxtrick.L10n.getTextByLevel(skill.max);
-				}
+
+				if ((current === '-' || !current) && skill.current)
+					current = Foxtrick.L10n.getTextByLevel(skill.current);
+				if ((max === '-' || !max) && skill.max)
+					max = Foxtrick.L10n.getTextByLevel(skill.max);
 			}
 			else {
 				// no images, the cell says 'unknown'
