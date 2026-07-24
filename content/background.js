@@ -358,6 +358,49 @@ Foxtrick.loader.background.browserLoad = function() {
 		// from load.js
 		this.requests.cacheClear = () => Foxtrick.cache.clear();
 
+		// from misc.js — full cache wipe (session + local + HTTP cache)
+		this.requests.clearCaches = function(request, sender, sendResponse) {
+			Foxtrick.clearCaches();
+			sendResponse({ ok: true });
+		};
+
+		/**
+		 * Toolbar popup state without getBackgroundPage() (MV3-ready).
+		 *
+		 * @param  {*} request
+		 * @param  {chrome.runtime.MessageSender} sender
+		 * @param  {ResponseCb} sendResponse
+		 */
+		this.requests.popupGetState = function(request, sender, sendResponse) {
+			let contributeText = Foxtrick.L10n.getString('changes.support');
+			try {
+				let temp = document.createElement('div');
+				let link = Foxtrick.L10n.appendLink(
+					'changes.support', temp, 'https://www.foxtrick.org/contribute');
+				if (link && link.textContent)
+					contributeText = link.textContent;
+			}
+			catch (e) {
+				Foxtrick.log('popupGetState contribute label:', e);
+			}
+
+			sendResponse({
+				disableTemporary: Foxtrick.Prefs.getBool('disableTemporary'),
+				featureHighlight: Foxtrick.Prefs.getBool('featureHighlight'),
+				translationKeys: Foxtrick.Prefs.getBool('translationKeys'),
+				strings: {
+					disableTemporary: Foxtrick.L10n.getString('toolbar.disableTemporary'),
+					featureHighlight: Foxtrick.L10n.getString('toolbar.featureHighlight'),
+					translationKeys: Foxtrick.L10n.getString('toolbar.translationKeys'),
+					preferences: Foxtrick.L10n.getString('toolbar.preferences'),
+					homepage: Foxtrick.L10n.getString('link.homepage'),
+					contribute: contributeText,
+					clearCache: Foxtrick.L10n.getString('api.clearCache'),
+					clearCacheTitle: Foxtrick.L10n.getString('api.clearCache.title'),
+				},
+			});
+		};
+
 		// from misc.js
 		this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
 			Foxtrick.cookies.get(key, name) // never rejects

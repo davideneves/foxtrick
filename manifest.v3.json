@@ -1,0 +1,65 @@
+{
+	"manifest_version": 3,
+	"name": "Foxtrick MV3 Spike",
+	"version": "0.17.9.0",
+	"description": "Experimental Manifest V3 service-worker spike. Not for production. See maintainer/MV3-SPIKE.md.",
+	"icons": {
+		"16": "skin/icon-16.png",
+		"48": "skin/icon-48.png",
+		"128": "skin/icon-128.png"
+	},
+	"background": {
+		"service_worker": "content/background-sw.js"
+	},
+	"action": {
+		"default_icon": "skin/icon-24.png",
+		"default_title": "Foxtrick MV3 spike",
+		"default_popup": "content/popup.html"
+	},
+	"permissions": [
+		"storage",
+		"cookies",
+		"contextMenus",
+		"notifications",
+		"clipboardWrite",
+		"scripting"
+	],
+	"host_permissions": [
+		"*://*.hattrick.org/*",
+		"*://*.hattrick.ws/*",
+		"*://*.hattrick.bz/*",
+		"*://*.hat-trick.net/*",
+		"*://*.hattrick.uol.com.br/*",
+		"*://*.hattrick.interia.pl/*",
+		"*://*.hattrick.name/*",
+		"*://*.hattrick.fm/*",
+		"*://chpp.hattrick.org/*",
+		"*://*.foxtrick.org/*",
+		"https://www.fantamondi.it/*"
+	],
+	"optional_host_permissions": [
+		"https://*.hattrick-youthclub.org/*",
+		"http://no9-online.de/*",
+		"http://www.latehome.de/*",
+		"https://vimeo.com/api/*",
+		"https://www.youtube.com/*",
+		"https://www.dailymotion.com/services/*",
+		"https://secure.flickr.com/services/oembed/*",
+		"http://backend.deviantart.com/*",
+		"https://soundcloud.com/*",
+		"https://imageshack.us/*",
+		"http://api.openweathermap.org/*"
+	],
+	"options_ui": {
+		"page": "content/preferences.html",
+		"open_in_tab": true
+	},
+	"homepage_url": "https://www.foxtrick.org/",
+	"minimum_chrome_version": "109",
+	"browser_specific_settings": {
+		"gecko": {
+			"strict_min_version": "109.0",
+			"id": "foxtrick-webext-mv3-spike@foxtrick.org"
+		}
+	}
+}
