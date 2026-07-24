@@ -331,6 +331,8 @@ pref("extensions.foxtrick.prefs.module.PsicoTSI.hideUnderSkills.enabled", true);
 pref("extensions.foxtrick.prefs.module.PsicoTSI.enablePlayersPage.enabled", true);
 pref("extensions.foxtrick.prefs.module.PsicoTSI.enableTLPage.enabled", true);
 pref("extensions.foxtrick.prefs.module.PsicoTSI.displayAsLink.enabled", true);
+pref("extensions.foxtrick.prefs.module.SkillAlmostLevel.enabled", true);
+pref("extensions.foxtrick.prefs.module.SkillAlmostLevel.OwnPlayersOnly.enabled", true);
 pref("extensions.foxtrick.prefs.module.RapidId.enabled", true);
 pref("extensions.foxtrick.prefs.module.Ratings.enabled", true);
 pref("extensions.foxtrick.prefs.module.Ratings.HideAverages.enabled", false);
