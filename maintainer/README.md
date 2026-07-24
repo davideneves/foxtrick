@@ -1,5 +1,15 @@
 This file is intended for maintainers of Foxtrick, including notes for version and releasing.
 
+## Developer docs (this folder)
+
+* [LocalDev.md](LocalDev.md) — load unpacked, remotes, smoke test
+* [DevGuide.md](DevGuide.md) — architecture and module authoring
+* [HT-AUDIT.md](HT-AUDIT.md) — Hattrick DOM fragility checklist
+* [LIBS.md](LIBS.md) — third-party library inventory
+* [MV3-SPIKE.md](MV3-SPIKE.md) — Manifest V3 migration spike
+* [CodeStyle.md](CodeStyle.md) — coding style
+* `check-manifest.py` — validate script paths in `manifest.json` / `background.html`
+
 ## Version Scheme
 Foxtrick has two major channels of versions, one is stable version for daily use and another is beta version for testing.
 

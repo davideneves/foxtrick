@@ -160,6 +160,11 @@ Usually we enable all modules to improve their discoverability.
 ## Development workflow
 
 It's best to work on Google Chrome and afterwards check if Firefox is not broken.
+See also [LocalDev.md](LocalDev.md) for a short load/smoke-test checklist.
+
+Foxtrick is a **WebExtension** (`manifest_version: 2`). Both Chrome and Firefox use a
+background page (`content/background.html`) plus content scripts. Layers communicate via
+JSON messaging (`Foxtrick.SB.ext.*` in `content/env.js`).
 
 ### Google Chrome
 
@@ -187,16 +192,28 @@ Background cache is discarded by executing `document.location.reload();` in the 
 
 ### Firefox
 
-In contrast, in Firefox there is no clear separation between layers, and the 'background' is shared
-by all add-ons and Firefox itself. This leads to a high risks of memory leaks and security issues.
+Firefox uses the same WebExtension model as Chrome for Foxtrick (not the legacy XUL shared-compartment model).
 
-However, each browser window has a different context.
+1. Open `about:debugging#/runtime/this-firefox`
+2. Click **Load Temporary Add-on…**
+3. Select `manifest.json` at the repository root
 
-Firefox development is messy. Code changes need a browser restart/opening a new window
-and the debugging is very inconvenient.
+Temporary add-ons disappear when Firefox restarts; reload them after pulling or editing code.
 
-* First you need to [set up an extension development environment](https://developer.mozilla.org/en/docs/Setting_up_extension_development_environment).
-* Foxtrick can then be debugged with the [Browser Debugger](https://developer.mozilla.org/en-US/docs/Tools/Debugger).
+Debugging:
+
+* Inspect the background page from about:debugging (inspect next to Foxtrick)
+* Content scripts: open the Hattrick tab developer tools
+* Enable logging: `extensions.foxtrick.prefs.logDisabled = false`
+
+Validate script paths without a browser:
+
+```bash
+python3 maintainer/check-manifest.py
+```
+
+Manifest V3 migration notes: [MV3-SPIKE.md](MV3-SPIKE.md).
+HT DOM fragility checklist: [HT-AUDIT.md](HT-AUDIT.md).
 
 ## Module API documentation
 
